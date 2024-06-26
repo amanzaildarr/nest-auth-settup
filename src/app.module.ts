@@ -20,15 +20,15 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
 
     // Configure internationalization (i18n) module
-    // I18nModule.forRoot({
-    //   fallbackLanguage: 'en', // Set fallback language
-    //   loaderOptions: { path: path.join(__dirname, '/i18n/'), watch: true }, // Set path for language files
-    //   resolvers: [
-    //     GraphQLWebsocketResolver, // Resolver for GraphQL WebSockets
-    //     { use: QueryResolver, options: ['lang'] }, // Resolver for language query parameter
-    //     AcceptLanguageResolver, // Resolver for Accept-Language header
-    //   ],
-    // }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en', // Set fallback language
+      loaderOptions: { path: path.join(__dirname, '/i18n/'), watch: true }, // Set path for language files
+      resolvers: [
+        GraphQLWebsocketResolver, // Resolver for GraphQL WebSockets
+        { use: QueryResolver, options: ['lang'] }, // Resolver for language query parameter
+        AcceptLanguageResolver, // Resolver for Accept-Language header
+      ],
+    }),
 
     // Configure Mongoose with the provided DB_URI
     MongooseModule.forRoot(process.env.DB_URI),

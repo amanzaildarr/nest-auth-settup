@@ -1,0 +1,6 @@
+{
+  "InvalidUser": "Invalid User id",
+  "MailExists": "This email already has beed register.",
+  "NumberExists": "This number already has beed register.",
+  "UserDeleted": "User deleted successfully."
+}
