@@ -8,7 +8,7 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
-import path from 'path';
+import * as path from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
