@@ -1,0 +1,5 @@
+/* Hide Swagger logo */
+.swagger-ui .topbar {
+    display: none;
+  }
+  
