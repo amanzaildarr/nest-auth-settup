@@ -1,6 +1,7 @@
 {
-  "InvalidUser": "Invalid User id",
-  "MailExists": "This email already has beed register.",
-  "NumberExists": "This number already has beed register.",
-  "UserDeleted": "User deleted successfully."
+  "NotFound": "User not found.",
+  "MailExists": "This email already has been registered.",
+  "UserDeleted": "User deleted successfully.",
+  "InvalidOldPassword":"Incorrect old password.",
+  "PasswordUpdated": "Password updated successfully"
 }

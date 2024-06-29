@@ -11,11 +11,8 @@ export type UserDocument = HydratedDocument<User>;
   toJSON: { virtuals: true },
 })
 export class User {
-  @Prop({
-    type: String,
-    default: null,
-  })
-  phoneNumber: string;
+  @Prop({ type: String })
+  mobile: string;
 
   @Prop({ type: String, required: true })
   email: string;

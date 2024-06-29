@@ -1,5 +1,4 @@
 export class ChangeUserPasswordDto {
-  old_password: string;
-  new_password: string;
-  confirm_password: string;
+  oldPassword: string;
+  newPassword: string;
 }
