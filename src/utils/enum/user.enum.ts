@@ -3,6 +3,7 @@ enum Status {
   Suspended = 'suspended',
 }
 enum UserRole {
+  BusinessOwner = 'business-owner',
   Admin = 'admin',
   SuperAdmin = 'super-admin',
   Patient = 'patient',
