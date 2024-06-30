@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FilterQuery, Model } from 'mongoose';
 import { User, UserDocument } from './schema/user.schema';
@@ -20,6 +25,13 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto, parentUser?: UserDocument) {
+    const isEmailExist = await this.userModel.findOne({
+      email: createUserDto.email,
+    });
+    if (isEmailExist) {
+      throw new ConflictException(this.i18n.t('user.MailExists'));
+    }
+
     const newUser = new this.userModel({
       ...createUserDto,
     });
@@ -33,37 +45,42 @@ export class UserService {
     return await newUser.save();
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const users = await this.userModel.find({});
+    return { users };
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string) {
+    const user = await this.userModel.findById(id);
+    if (!user) {
+      throw new NotFoundException(this.i18n.t('user.NotFound'));
+    }
+    return user;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    await this.findOne(id);
+    await this.userModel.findByIdAndDelete(id);
+    return this.i18n.t('user.UserDeleted');
   }
 
   async changePassword(
     changePasswordDto: ChangeUserPasswordDto,
     u: UserDocument,
   ) {
-    if (changePasswordDto.new_password !== changePasswordDto.confirm_password) {
-      throw new BadRequestException(this.i18n.t('auth.PasswordNotMatch'));
-    }
+    console.log('u', u);
     const user = await this.userModel.findById(u.id);
 
     const isPassValid = await this.comparePasswords(
-      changePasswordDto.old_password,
+      changePasswordDto.oldPassword,
       user.password,
     );
     if (!isPassValid) {
-      throw new BadRequestException(this.i18n.t('auth.InvalidOldPassword'));
+      throw new BadRequestException(this.i18n.t('user.InvalidOldPassword'));
     }
-    user.password = await this.hashPassword(changePasswordDto.new_password);
+    user.password = await this.hashPassword(changePasswordDto.newPassword);
     await user.save();
-    return this.i18n.t('auth.PasswordUpdated');
+    return this.i18n.t('user.PasswordUpdated');
   }
 
   getUser(where: FilterQuery<User>) {
