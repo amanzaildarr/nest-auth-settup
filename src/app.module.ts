@@ -10,6 +10,8 @@ import {
 } from 'nestjs-i18n';
 import * as path from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 
     // Configure Mongoose with the provided DB_URI
     MongooseModule.forRoot(process.env.DB_URI),
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
